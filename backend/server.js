@@ -896,6 +896,18 @@ app.get('/api/faculty/requests/:id', authenticateToken, (req, res) => {
 // ─────────────────────────────────────────
 // Start server
 // ─────────────────────────────────────────
+// ─────────────────────────────────────────
+// DEBUG: Get all users (For Faculty Demo)
+// ─────────────────────────────────────────
+app.get('/api/debug/users', (req, res) => {
+  try {
+    const users = getAll('SELECT id, fullName, qid, email, role, department, createdAt FROM users ORDER BY createdAt DESC');
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch users' });
+  }
+});
+
 async function start() {
   await initDatabase();
 
